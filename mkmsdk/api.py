@@ -99,5 +99,7 @@ class Api(object):
         status = response.status_code
         if 200 <= status <= 299:
             return response
+        elif status == 429:
+            raise exceptions.TooManyRequests()
         else:
             raise exceptions.ConnectionError(response)

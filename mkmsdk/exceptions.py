@@ -77,3 +77,17 @@ class SerializationException(Exception):
     """Wraps exceptions raised during XML serialization"""
     def __str__(self):
         return 'Serialization exception. %s' % self.args
+
+
+class TooManyRequests(Exception):
+    """
+    MKMAPI has request limits which reset every midnight at 00:00 CET
+
+    Dedicated App (private users): 5.000
+    Dedicated App (commercial users): 50.000
+    Widget App: 50.000
+    all other apps don't have any request limits
+    """
+
+    def __str__(self):
+        return 'Daily request limit exceeded'
