@@ -4,7 +4,7 @@ from . import resolvers
 default_api_map = api_map._API_MAP['current']['api']
 
 
-class Mkm:
+class Mkm(object):
 
     def __init__(self, api_map=None, **kwargs):
         """

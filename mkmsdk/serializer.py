@@ -4,7 +4,7 @@ from six import StringIO
 from .exceptions import SerializationException
 
 
-class XMLSerializer:
+class XMLSerializer(object):
     """Serializes data to XML"""
     def __init__(self):
         self.generator = None

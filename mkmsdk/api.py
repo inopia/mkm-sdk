@@ -8,7 +8,7 @@ from .MKMOAuth1 import MKMOAuth1
 from .api_map import _API_MAP
 
 
-class Api:
+class Api(object):
 
     def __init__(self, sandbox_mode=False):
         """

@@ -5,7 +5,7 @@ from . import exceptions
 from .serializer import XMLSerializer
 
 
-class SimpleResolver:
+class SimpleResolver(object):
     """
 
     """
