@@ -10,7 +10,7 @@ from .api_map import _API_MAP
 
 class Api(object):
 
-    def __init__(self, sandbox_mode=False):
+    def __init__(self, auth_tokens={}, sandbox_mode=False):
         """
         Initializes the endpoint used for requests
 
@@ -21,6 +21,8 @@ class Api(object):
             self.base_endpoint = _API_MAP['current']['api_sandbox_root']
         else:
             self.base_endpoint = _API_MAP['current']['api_root']
+
+        self.auth_tokens = auth_tokens
 
     def request(self, url, method, **kwargs):
         """
@@ -37,7 +39,7 @@ class Api(object):
 
         complete_url = '{}{}'.format(self.base_endpoint, url)
 
-        auth = self.create_auth(complete_url)
+        auth = self.create_auth(complete_url, **self.auth_tokens)
 
         response = request(method=method, url=complete_url, auth=auth, **kwargs)
         return self.handle_response(response)

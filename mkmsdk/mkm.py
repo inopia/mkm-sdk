@@ -6,7 +6,7 @@ default_api_map = api_map._API_MAP['current']['api']
 
 class Mkm(object):
 
-    def __init__(self, api_map=None, **kwargs):
+    def __init__(self, api_map=None, auth_tokens={}, **kwargs):
         """
         Initializes the api_map and eventual sandbox mode
 
@@ -17,6 +17,7 @@ class Mkm(object):
         """
         self.api_map = api_map
         self.sandbox_mode = kwargs.get('sandbox_mode')
+        self.auth_tokens = auth_tokens
 
     def __getattr__(self, name):
         """
@@ -29,7 +30,7 @@ class Mkm(object):
             `instance`: Return an instance of Mkm with updated api_map
         """
 
-        instance = Mkm(api_map=self.api_map[name], sandbox_mode=self.sandbox_mode)
+        instance = Mkm(api_map=self.api_map[name], auth_tokens=self.auth_tokens, sandbox_mode=self.sandbox_mode)
         setattr(self, name, instance)
         return instance
 
@@ -44,7 +45,7 @@ class Mkm(object):
             `response`: Returns the response from the server
         """
 
-        resolver = resolvers.SimpleResolver(self.sandbox_mode)
+        resolver = resolvers.SimpleResolver(self.sandbox_mode, self.auth_tokens)
         return resolver.resolve(api_map=self.api_map, **kwargs)
 
 mkm = Mkm(api_map=default_api_map)
