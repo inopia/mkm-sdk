@@ -6,7 +6,7 @@ default_api_map = api_map._API_MAP['current']['api']
 
 class Mkm(object):
 
-    def __init__(self, api_map=None, auth_tokens={}, **kwargs):
+    def __init__(self, api_map=default_api_map, auth_tokens={}, **kwargs):
         """
         Initializes the api_map and eventual sandbox mode
 
