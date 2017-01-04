@@ -287,7 +287,7 @@ _API_MAP = {
                 },
 
                 'post_wants_list': {
-                    'url': '/wantslist/{wants}',
+                    'url': '/wantslist',
                     'method': 'post',
                     'description': 'Creates a new wants list for the authenticated user'
                 },
