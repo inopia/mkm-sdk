@@ -40,3 +40,4 @@ site/
 *~
 .env
 MANIFEST
+*.swp
