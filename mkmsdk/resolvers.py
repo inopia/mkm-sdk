@@ -15,7 +15,7 @@ class SimpleResolver(object):
         self.method = ''
         self.api = Api(auth_tokens=auth_tokens, sandbox_mode=sandbox_mode)
 
-    def setup(self, api_map=None, **kwargs):
+    def setup(self, api_map=None, data=None, **kwargs):
         """
         Set up the url with required parameters and method of the request
 
@@ -31,6 +31,11 @@ class SimpleResolver(object):
 
         url = api_map['url']
         method = api_map['method']
+
+        if method == "get" and type(data) is dict:
+            params = api_map.get("params", [])
+            for key in data.keys():
+                assert key in params, "{key} is not parameter list {list}".format(key=key, list=params)
 
         try:
             url = url.format(**kwargs)
@@ -52,10 +57,13 @@ class SimpleResolver(object):
         Return:
             `response`: Returns the response received from the server
         """
-        self.setup(api_map=api_map, **kwargs)
+        self.setup(api_map=api_map, data=data, **kwargs)
 
-        if isinstance(data, dict):
+        if isinstance(data, dict) and self.method is not 'get':
             serializer = XMLSerializer()
             data = serializer.serialize(data=data)
 
-        return self.api.request(url=self.url, method=self.method, data=data)
+        if self.method == "get":
+            return self.api.request(url=self.url, method=self.method, params=data)
+        else:
+            return self.api.request(url=self.url, method=self.method, data=data)

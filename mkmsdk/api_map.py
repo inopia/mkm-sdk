@@ -1,5 +1,235 @@
 _API_MAP = {
     'current': {
+        'api_root': 'https://www.mkmapi.eu/ws/v2.0/output.json',
+        'api_sandbox_root': 'https://sandbox.mkmapi.eu/ws/v2.0/output.json',
+        'api': {
+            'account_management': {
+                'account': {
+                    'url': '/account',
+                    'method': 'get',
+                    'description': 'Get the Account entity of the authenticated user'
+                },
+                'vacation': {
+                    'url': '/account/vacation',
+                    'method': 'put',
+                    'description': 'Updates the vacation status of the authenticated user; returns the Account entity',
+                    'params': {'onVacation': ['true', 'false']}
+                },
+                'put_language': {
+                    'url': '/account/language',
+                    'method': 'put',
+                    'description': 'Updates the display language of the authenticated user; returns the Account entity',
+                    'params': {'idDisplayLanguage': [1, 2, 3, 4, 5]}
+                },
+                'get_messages_thread': {
+                    'url': '/account/messages',
+                    'method': 'get',
+                    'description': 'Get the message thread overview for the authenticated user'
+                },
+
+                'get_messages_thread_user': {
+                    'url': '/account/messages/{user}',
+                    'method': 'get',
+                    'description': 'Get a complete message thread between the authenticated user and another user'
+                },
+                'send_message': {
+                    'url': '/account/messages/{user}',
+                    'method': 'post',
+                    'description': 'Write a message to another user',
+                    'example_data': {
+                        'message': 'Message text goes here'
+                    }
+                },
+                'delete_thread': {
+                    'url': '/account/messages/{user}',
+                    'method': 'delete',
+                    'description': 'Delete all messages between the authenticated and another user'
+                },
+                'delete_single_message': {
+                    'url': '/account/messages/{user}/{message}',
+                    'method': 'delete',
+                    'description': 'Delete a single message between the authenticated and another user'
+                },
+                'coupon': {
+                    'url': '/account/coupon',
+                    'method': 'post',
+                    'description': 'Redeems one or more coupons'
+                },
+                'request_seller_activation': {
+                    'url': '/account/selleractivation',
+                    'method': 'post',
+                    'description': 'Request a seller activation for the authenticated user account.',
+                    'example_data': {
+                        'phoneNumber': '+49 30 12345678',
+                        'bankAccountOwner': 'Max Mustermann',
+                        'iban': 'DE99101010101010101010',
+                        'bic': 'BANKDEXX',
+                        'bankName': 'Bankname'
+                    }
+                },
+                'complete_seller_activation': {
+                    'url': '/account/selleractivation',
+                    'method': 'put',
+                    'description': 'Request a seller activation for the authenticated user account.',
+                    'example_data': {
+                        'amount1': '0.04',
+                        'amount2': '0.06'
+                    }
+                }
+            },
+            'market_place': {
+                'games': {
+                    'url': '/games',
+                    'method': 'get',
+                    'description': 'Returns all games supported by MKM and you can sell and buy cards for'
+                },
+                'metaproduct': {
+                    'url': '/metaproducts/{metaproduct}',
+                    'method': 'get',
+                    'description': 'Returns the Metaproduct entity for the metaproduct specified by its ID'
+                },
+                'metaproducts': {
+                    'url': '/metaproducts/find',
+                    'method': 'get',
+                    'description': "Returns a metaproduct specified by an name to search for, a flag indicating\
+if the metaproduct's name must exactly match the search string, the language ID the search term is given in and the game ID the metacard is searched for.",
+                    'params': ['search', 'exact', 'idGame', 'idLanguage']
+                },
+                'product': {
+                    'url': '/products/{product}',
+                    'method': 'get',
+                    'description': 'Returns a product specified by its ID '
+                },
+                'products': {
+                    'url': '/products/find',
+                    'method': 'get',
+                    'description': 'Searches for products by a given search string',
+                    'params': ['search', 'exact', 'idGame', 'idLanguage', 'start', 'maxResults']
+                },
+                'product_list': {
+                    'url': '/productlist',
+                    'method': 'get',
+                    'description': 'Returns a gzipped CSV file with all relevant products available at Cardmarket.'
+                },
+                'priceguide': {
+                    'url': '/priceguide',
+                    'method': 'get',
+                    'description': 'Returns a gzipped CSV with relevant pricing information for given game',
+                    'params': ['idGame'],
+                },
+                'expansion': {
+                    'url': '/games/{game}/expansions',
+                    'method': 'get',
+                    'description': 'Returns Expansion entities for all expansions with single cards for a specific game'
+                },
+                'expansion_singles': {
+                    'url': '/expansions/{expansion}/singles',
+                    'method': 'get',
+                    'description': 'Returns Product entities for all expansions with single cards for a specific game'
+                },
+                'articles': {
+                    'url': '/articles/{idProduct}',
+                    'method': 'get',
+                    'description': 'Returns all available articles for a specified product.',
+                    'params': ['start', 'maxResults', 'userType', 'minUserScore', 'idLanguage',
+                               'minCondition', 'isFoil', 'isSingle', 'isAltered', 'minAvailable']
+                },
+                'user': {
+                    'url': '/users/{user}',
+                    'method': 'get',
+                    'description': 'Returns the User entity for the user specified by its ID or exact name'
+                },
+                'articles_user': {
+                    'url': '/users/{user}/articles',
+                    'method': 'get',
+                    'description': 'Returns Article entities for available articles from a specified user ID or name',
+                    'params': ['idUser', 'idGame', 'start', 'maxResults'],
+                },
+                'find_user': {
+                    'url': '/users/find',
+                    'method': 'get',
+                    'description': 'Returns users where the username is matching the given search string.',
+                    'params': ['search']
+                }
+            },
+            'order_management': {
+
+                'get_order': {
+                    'url': '/order/{order}',
+                    'method': 'get',
+                    'description': 'Returns the Order entity specified by its ID'
+                },
+
+                'put_order': {
+                    'url': '/order/{order}',
+                    'method': 'put',
+                    'description': 'Changes the state of an order specified by its ID'
+                },
+
+                'order_eval': {
+                    'url': '/order/{order}/evaluation',
+                    'method': 'post',
+                    'description': 'Evaluates an order specified by its ID'
+                },
+
+                'orders': {
+                    'url': '/orders/{actor}/{state}',
+                    'method': 'get',
+                    'description': 'Returns the complete collection of filtered orders.',
+                    'params': ['start'],
+                },
+
+                'orders_paginated': {
+                    'url': '/orders/{actor}/{state}/{start}',
+                    'method': 'get',
+                    'description': 'Returns the paginated complete collection of filtered orders.'
+                }
+            },
+            'wants_list': {
+                'get_wants_list': {
+                    'url': '/wantslist',
+                    'method': 'get',
+                    'description': 'Returns all wants lists for the authenticated user'
+                },
+                'post_wants_list': {
+                    'url': '/wantslist',
+                    'method': 'post',
+                    'description': 'Creates a new wants list for the authenticated user',
+                    'example_data': {
+                        'wantslist': [{
+                            'name': 'my list',
+                            'idGame': 1
+                        }]
+                    }
+                },
+                'put_wants_list': {
+                    'url': '/wantslist/{wants}',
+                    'method': 'put',
+                    'description': 'Adds, edits, or removes wants to, at, or from a wants list specified by its ID',
+                    'example_data': {
+                        'action': 'addItem',
+                        'product': [{
+                            'idProduct': 123,
+                            'count': 4,
+                            'idLanguage': 1,
+                            'minCondition': 'NM',
+                            'isFoil': False,
+                            'isSigned': False,
+                            'isAltered': False,
+                            'wishPrice': '0.5'
+                        }],
+                        'metaproduct': [{ 'idMetaproduct': 5395, 'count': 4, 'wishPrice': '1'}]
+                    },
+                },
+                'delete_wants_list': {
+                    'url': '/wantslist/{wants}',
+                    'method': 'delete',
+                    'description': 'Deletes a wants list specified by its ID for the authenticated user'
+                }
+            }
+        }
+    },
+    '1.1': {
         'api_root': 'https://www.mkmapi.eu/ws/v1.1/output.json',
         'api_sandbox_root': 'https://sandbox.mkmapi.eu/ws/v1.1/output.json',
         'api': {
