@@ -10,7 +10,7 @@ from .api_map import _API_MAP
 
 class Api(object):
 
-    def __init__(self, auth_tokens={}, sandbox_mode=False):
+    def __init__(self, auth_tokens={}, sandbox_mode=False, version='current'):
         """
         Initializes the endpoint used for requests
 
@@ -18,9 +18,9 @@ class Api(object):
             `sandbox_mode`: Specifies if sending request to sandbox or live server
         """
         if sandbox_mode:
-            self.base_endpoint = _API_MAP['current']['api_sandbox_root']
+            self.base_endpoint = _API_MAP[version]['api_sandbox_root']
         else:
-            self.base_endpoint = _API_MAP['current']['api_root']
+            self.base_endpoint = _API_MAP[version]['api_root']
 
         self.auth_tokens = auth_tokens
 
