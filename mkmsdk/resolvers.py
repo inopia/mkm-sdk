@@ -37,6 +37,11 @@ class SimpleResolver(object):
             for key in data.keys():
                 assert key in params, "{key} is not parameter list {list}".format(key=key, list=params)
 
+        # MKMAPI is weird like that
+        for key, value in data.items():
+            if value in [True, False]:
+                data[key] = str(value).lower()
+
         try:
             url = url.format(**kwargs)
         except KeyError as param:

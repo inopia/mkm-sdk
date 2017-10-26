@@ -128,11 +128,13 @@ if the metaproduct's name must exactly match the search string, the language ID 
                     'description': 'Returns Product entities for all expansions with single cards for a specific game'
                 },
                 'articles': {
-                    'url': '/articles/{idProduct}',
+                    'url': '/articles/{product}',
                     'method': 'get',
                     'description': 'Returns all available articles for a specified product.',
-                    'params': ['start', 'maxResults', 'userType', 'minUserScore', 'idLanguage',
-                               'minCondition', 'isFoil', 'isSingle', 'isAltered', 'minAvailable']
+                    'params': [
+                        'start', 'maxResults', 'userType', 'minUserScore', 'idLanguage',
+                        'minCondition', 'isFoil', 'isSingle', 'isAltered', 'minAvailable',
+                        'isSigned'],
                 },
                 'user': {
                     'url': '/users/{user}',
