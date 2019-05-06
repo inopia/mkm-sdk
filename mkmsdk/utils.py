@@ -2,7 +2,7 @@ import base64
 import csv
 import gzip
 import os
-from StringIO import StringIO
+from io import StringIO
 from . import exceptions
 
 
